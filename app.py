@@ -24,7 +24,7 @@ def prepare_image(image):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html',result='')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -56,5 +56,5 @@ def predict():
         return render_template('index.html', prediction=result)
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    # port = int(os.environ.get("PORT", 8000))
+    app.run(host='0.0.0.0', port=8000, debug=True)
