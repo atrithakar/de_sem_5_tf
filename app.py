@@ -7,8 +7,13 @@ import numpy as np
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+
 # Load your trained model
-model = load_model('D:\\VGEC\\SEM5\\DE\\model1.h5')
+model_path = os.path.join(os.getcwd(), 'model1.h5')
+
+model = load_model(model_path)
 
 # Image preprocessing function
 def prepare_image(image_path):
@@ -45,7 +50,10 @@ def predict():
         
         result = classes[predicted_class]
         
+        os.remove(file_path)
+
         return render_template('index.html', prediction=result)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host='0.0.0.0',port=port,debug=True)
